@@ -20,21 +20,6 @@ st.markdown("""
     <style>
     .main-header { font-size: 28px; font-weight: bold; color: #1E293B; margin-bottom: 5px; }
     .sub-header { font-size: 15px; color: #64748B; margin-bottom: 20px; }
-    .metric-card {
-        background-color: #FFFFFF;
-        padding: 15px;
-        border-radius: 12px;
-        border: 1px solid #E2E8F0;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    }
-    .badge-orange {
-        background-color: #FFF7ED;
-        color: #EA580C;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 12px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -93,12 +78,11 @@ with tab_phases:
         st.write("---")
 
 # =========================================================
-# TAB 2: SUIVI & RAPPORTS (GRAPHIQUES PYTHON MATPLOTLIB / PLOTLY)
+# TAB 2: SUIVI & RAPPORTS (GRAPHIQUES PYTHON)
 # =========================================================
 with tab_rapports:
     st.subheader("Analyses d'Études & Indicateurs Clés")
 
-    # Indicateurs financiers & Délais
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Budget Consommé", "18.9 M FCFA", "Budget Total: 45 M FCFA")
     m2.metric("Retard Accumulé", "6 jours", "Météo / Approvisionnement")
@@ -107,7 +91,6 @@ with tab_rapports:
 
     st.divider()
 
-    # Graphique 1: Avancement réel vs Planifié (Plotly)
     st.markdown("#### 1. Avancement Réel vs Planifié par Phase")
     df_avancement = pd.DataFrame({
         "Phase": ["Terrassement", "Fondations", "Rez-de-chaussée", "Dalle 1er étage", "Élévation Étages", "Finitions"],
@@ -152,20 +135,16 @@ with tab_rapports:
 
     st.divider()
 
-    # Graphique d'Étude Python Pur (Matplotlib/Seaborn Style)
-    st.markdown("#### 4. Analyse Statistiques Python - Contrôle Qualité & Thermographie")
-    
+    st.markdown("#### 4. Analyse Statistiques Python - Contrôle Qualité")
     fig_mpl, ax = plt.subplots(figsize=(8, 3))
     categories = ['Qualité', 'Béton', 'Infiltration', 'Thermographie', 'Équipements']
     conformes = [8, 5, 3, 2, 4]
     non_conformes = [1, 0, 1, 1, 0]
-
     x = np.arange(len(categories))
     width = 0.35
 
     ax.bar(x - width/2, conformes, width, label='Conformes', color='#10B981')
     ax.bar(x + width/2, non_conformes, width, label='Non Conformes', color='#EF4444')
-
     ax.set_ylabel('Nombre de Contrôles')
     ax.set_title('Rapport de Synthèse Qualité par Domaine')
     ax.set_xticks(x)
@@ -174,7 +153,6 @@ with tab_rapports:
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     plt.tight_layout()
-
     st.pyplot(fig_mpl)
 
 # =========================================================
@@ -182,67 +160,64 @@ with tab_rapports:
 # =========================================================
 with tab_journal:
     st.subheader("Journal des Activités Récentes")
-
     journal_items = [
-        {
-            "titre": "Coulage des poteaux du RDC",
-            "date": "09/10/2026",
-            "meteo": "☀️ Ensoleillé",
-            "ouvriers": "18 ouvriers",
-            "desc": "Les poteaux du rez-de-chaussée ont été coulés ce matin. Décoffrage prévu dans 7 jours."
-        },
-        {
-            "titre": "Livraison de ciment",
-            "date": "06/10/2026",
-            "meteo": "⛅ Nuageux",
-            "ouvriers": "15 ouvriers",
-            "desc": "Réception de 200 sacs de ciment. Stock sécurisé sous bâche."
-        },
-        {
-            "titre": "Ralentissement dû aux pluies",
-            "date": "02/10/2026",
-            "meteo": "🌧️ Pluvieux",
-            "ouvriers": "12 ouvriers",
-            "desc": "Fortes pluies en début de semaine : maçonnerie meulée et ralentie pendant deux jours."
-        }
+        {"titre": "Coulage des poteaux du RDC", "date": "09/10/2026", "meteo": "☀️ Ensoleillé", "ouvriers": "18 ouvriers", "desc": "Les poteaux du rez-de-chaussée ont été coulés ce matin."},
+        {"titre": "Livraison de ciment", "date": "06/10/2026", "meteo": "⛅ Nuageux", "ouvriers": "15 ouvriers", "desc": "Réception de 200 sacs de ciment. Stock sécurisé sous bâche."},
+        {"titre": "Ralentissement dû aux pluies", "date": "02/10/2026", "meteo": "🌧️ Pluvieux", "ouvriers": "12 ouvriers", "desc": "Fortes pluies en début de semaine : maçonnerie ralentie."}
     ]
-
     for j in journal_items:
         with st.container():
-            col_j1, col_j2 = st.columns([3, 1])
-            with col_j1:
-                st.markdown(f"### {j['titre']}")
-                st.caption(f"🗓️ {j['date']} | {j['meteo']} | 👷 {j['ouvriers']}")
-                st.write(j['desc'])
+            st.markdown(f"### {j['titre']}")
+            st.caption(f"🗓️ {j['date']} | {j['meteo']} | 👷 {j['ouvriers']}")
+            st.write(j['desc'])
             st.divider()
 
 # =========================================================
 # TAB 4: SIMULATION DIRECTE DU CHANTIER
 # =========================================================
 with tab_simulation:
-    st.subheader("🧮 Simulateur de Budget et de Retard de Chantier (Cameroun)")
-    st.info("Ajustez les paramètres ci-dessous pour simuler le coût total révisé du chantier à Yaoundé et évaluer la gestion des risques.")
+    st.subheader("🧮 Simulateur de Budget, Météo et Effectifs (Cameroun)")
+    st.info("Paramétrez ci-dessous les coûts unitaires, les intempéries et l'équipe dédiée sur le chantier de Yaoundé.")
 
     col_s1, col_s2 = st.columns(2)
 
     with col_s1:
-        st.markdown("##### Paramètres de Simulation")
-        cout_ciment = st.slider("Prix du sac de ciment (FCFA)", min_value=4500, max_value=6500, value=5000, step=100)
-        retard_pluie = st.slider("Jours d'arrêt dus aux intempéries/pluies", min_value=0, max_value=30, value=6)
-        cout_main_oeuvre = st.number_input("Coût moyen journalier main d'œuvre (FCFA/jour)", value=150000)
-        gestion_dechets_cout = st.slider("Budget traitement/évacuation déchets (FCFA)", min_value=100000, max_value=1000000, value=350000, step=50000)
+        st.markdown("##### ⚙️ Paramètres Généraux & Matériaux")
+        cout_ciment = st.slider("Prix du sac de ciment (FCFA)", min_value=4000, max_value=8000, value=5000, step=100)
+        retard_pluie = st.slider("Jours d'arrêt dus aux intempéries (jours)", min_value=0, max_value=60, value=20)
+        gestion_dechets_cout = st.slider("Budget traitement/évacuation déchets (FCFA)", min_value=100000, max_value=2000000, value=700000, step=50000)
+
+        st.markdown("##### 👷 Gestion des Effectifs & Salaires Journaliers")
+        
+        col_eff1, col_eff2 = st.columns(2)
+        with col_eff1:
+            nb_chef = st.number_input("Nombre Chef de chantier", min_value=0, value=1)
+            nb_ferrailleur = st.number_input("Nombre de Ferrailleurs", min_value=0, value=4)
+            nb_coffreur = st.number_input("Nombre de Coffreurs", min_value=0, value=6)
+        with col_eff2:
+            cout_chef = st.number_input("Coût/jour Chef (FCFA)", value=15000)
+            cout_ferrailleur = st.number_input("Coût/jour Ferrailleur (FCFA)", value=7000)
+            cout_coffreur = st.number_input("Coût/jour Coffreur (FCFA)", value=6000)
 
     with col_s2:
-        st.markdown("##### Résultats de la Simulation")
+        st.markdown("##### 📊 Résultats de la Simulation")
         
-        # Calculs de la simulation
+        # Calculs automatiques
+        masse_salariale_journaliere = (nb_chef * cout_chef) + (nb_ferrailleur * cout_ferrailleur) + (nb_coffreur * cout_coffreur)
         budget_initial = 45000000
-        surcout_meteo = retard_pluie * cout_main_oeuvre
-        variation_ciment = ((cout_ciment - 5000) / 5000) * 5000000 # Hypothèse 5M sur ciment
+        
+        # Surcoût lié aux jours d'arrêt où l'équipe est maintenue ou payée / impact de productivité
+        surcout_meteo = retard_pluie * masse_salariale_journaliere
+        
+        # Variation du coût du ciment (base 10 000 sacs estimés pour le projet)
+        total_sacs_estime = 10000
+        variation_ciment = (cout_ciment - 5000) * total_sacs_estime
+
         budget_simule = budget_initial + surcout_meteo + variation_ciment + (gestion_dechets_cout - 350000)
 
+        st.metric(label="Masse Salariale Journalière Globale", value=f"{masse_salariale_journaliere:,} FCFA".replace(",", " "))
+        st.metric(label="Surcoût total des 20 jours d'intempéries", value=f"{surcout_meteo:,} FCFA".replace(",", " "))
         st.metric(label="Budget Initial", value=f"{budget_initial:,} FCFA".replace(",", " "))
-        st.metric(label="Surcoût estimé des retards", value=f"{surcout_meteo:,} FCFA".replace(",", " "))
         st.metric(
             label="Budget Révisé Estimé", 
             value=f"{int(budget_simule):,} FCFA".replace(",", " "),
@@ -251,7 +226,7 @@ with tab_simulation:
         )
 
     st.markdown("---")
-    st.markdown("##### Projection Graphique de la Consommation Budgétaire")
+    st.markdown("##### 📈 Projection Graphique de la Consommation Budgétaire")
     
     x_months = ["Mois 1 (Juil)", "Mois 2 (Août)", "Mois 3 (Sept)", "Mois 4 (Oct)", "Mois 5 (Nov)", "Mois 6 (Déc)", "Mois 7 (Jan)", "Mois 8 (Fév)"]
     cumul_prev = np.linspace(5000000, budget_initial, len(x_months))
@@ -259,7 +234,7 @@ with tab_simulation:
 
     fig_sim = go.Figure()
     fig_sim.add_trace(go.Scatter(x=x_months, y=cumul_prev, mode='lines+markers', name='Budget Initial Prévu', line=dict(color='#94A3B8', dash='dash')))
-    fig_sim.add_trace(go.Scatter(x=x_months, y=cumul_sim, mode='lines+markers', name='Budget Simulé', line=dict(color='#EA580C', width=3)))
+    fig_sim.add_trace(go.Scatter(x=x_months, y=cumul_sim, mode='lines+markers', name='Budget Simulé avec Effectifs & Météo', line=dict(color='#EA580C', width=3)))
 
-    fig_sim.update_layout(title="Trajectoire Financière du Projet", yaxis_title="FCFA", height=350)
+    fig_sim.update_layout(title="Trajectoire Financière du Projet (Simulateur Yaoundé)", yaxis_title="FCFA", height=350)
     st.plotly_chart(fig_sim, use_container_width=True)
