@@ -59,9 +59,9 @@ with tab_phases:
     st.subheader("Phases d'Exécution du Projet")
     phases_data = [
         {"Phase": "Terrassement et implantation", "Type": "Terrassement", "Statut": "Terminé", "Echéance": "20/07/2026", "Progrès": 100},
-        {"Phase": "Fondations (semelles et longrines)", "Type": "Fondations", "Statut": "En cours", "Echéance": "10/09/2026", "Progrès": 90},
+        {"Phase": "Fondations (semelles et longrines)", "Type": "Fondations", "Statut": "Terminé", "Echéance": "10/09/2026", "Progrès": 100},
         {"Phase": "Élévation du rez-de-chaussée", "Type": "Gros œuvre", "Statut": "En cours", "Echéance": "30/11/2026", "Progrès": 55},
-        {"Phase": "Dalle du 1er étage", "Type": "Gros œuvre", "Statut": "En cours", "Echéance": "20/12/2026", "Progrès": 10},
+        {"Phase": "Dalle du 1er étage", "Type": "Gros œuvre", "Statut": "En cours", "À faire": "20/12/2026", "Progrès": 0},
         {"Phase": "Élévation des étages et toiture", "Type": "Gros œuvre", "Statut": "À faire", "Echéance": "10/02/2027", "Progrès": 0},
         {"Phase": "Menuiserie, peinture et finitions", "Type": "Finitions", "Statut": "À faire", "Echéance": "28/02/2027", "Progrès": 0},
     ]
